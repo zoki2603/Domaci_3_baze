@@ -1,0 +1,25 @@
+#login-form{
+    width: 50%;
+    margin: 5px auto;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid coral;
+}
+
+#login-form input{
+    width: 50%;
+    margin: 5px auto;
+}
+#login-form #login-btn{
+    background-color: coral;
+    color: #fff;
+}
+#login-form {
+    color: coral;
+}
+hr{
+    margin: auto;
+    width: 80px;
+    color: coral;
+    border: 2px solid;
+}
