@@ -3,22 +3,21 @@ include_once "PDV.php";
 class Product implements PDV
 {
     public int $id;
-    public string $productName;
+    public string $name;
     public float $price;
     public $image;
-    public  $amount;
+    public  $description;
     public  $quantity;
     public Category $category;
 
 
 
-    public function __construct($id, $productName, $price, $image, $amount)
+    public function __construct($id, $name, $price, $image, $amount)
     {
         $this->id = $id;
-        $this->productName = $productName;
+        $this->name = $name;
         $this->price = $price;
         $this->image = $image;
-        $this->amount = $amount;
     }
 
     public function getId()
@@ -30,22 +29,22 @@ class Product implements PDV
         return $this->quantity;
     }
 
-    public function getProductName()
+    public function getName()
     {
-        return $this->productName;
+        return $this->name;
     }
     public function getPrice()
     {
         return $this->price;
     }
 
-    public function getAmount()
+    public function getDescription()
     {
-        return $this->amount;
+        return $this->description;
     }
-    public function setAmount($amount)
+    public function setDescription($description)
     {
-        $this->amount = $amount;
+        $this->description = $description;
     }
 
     public function getCategory()
@@ -76,15 +75,15 @@ class Product implements PDV
         return number_format($sum, 2);
     }
 
-    public function reduceAmount($quantity = 1)
-    {
-        if ($this->amount >= $quantity) {
-            $this->amount -= $quantity;
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // public function reduceAmount($quantity = 1)
+    // {
+    //     if ($this->amount >= $quantity) {
+    //         $this->amount -= $quantity;
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
     public function removeFromCart(Cart $cart)
     {
         return $cart->removeProduct($this);

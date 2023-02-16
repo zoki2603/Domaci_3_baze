@@ -1,6 +1,6 @@
 <?php
-
-include_once "../loaddata.php";
+session_start();
+// include_once "../loaddata.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@ include_once "../loaddata.php";
         </div>
         <ul class="menu">
             <?php
-            if (!isset($_SESSION["logovani-korinik"])) { ?>
+            if (!isset($_SESSION["user"])) { ?>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="">Registar</a></li>
             <?php } else { ?>
@@ -55,7 +55,7 @@ include_once "../loaddata.php";
                     <div class="title"><?php echo $proizvod->productName ?></div>
                     <div class="box">
                         <div class="price"><?php echo $proizvod->price ?>$</div>
-                        <?php if (isset($_SESSION["logovani-korinik"])) { ?>
+                        <?php if (isset($_SESSION["user"])) { ?>
                             <a href="singleProduct.php?id=<?php echo $proizvod->id ?>"><button class="btn" name="buy-now">Buy Now</button></a>
                         <?php } else {
                             "";
@@ -73,13 +73,7 @@ include_once "../loaddata.php";
         <p>Copyrights at <a href="">Shop</a></p>
     </footer>
 
-    <script>
-        $(".menu-btn").click(function() {
-            $(".navbar.menu").toggleClass("active");
-            $(".menu-btn i").toggleClass("active");
 
-        });
-    </script>
 </body>
 
 </html>

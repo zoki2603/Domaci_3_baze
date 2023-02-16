@@ -25,7 +25,7 @@ include_once "../loaddata.php";
         </div>
         <ul class="menu">
             <?php
-            if (!isset($_SESSION["logovani-korinik"])) { ?>
+            if (!isset($_SESSION["user"])) { ?>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="">Registar</a></li>
             <?php } else { ?>
@@ -102,13 +102,8 @@ include_once "../loaddata.php";
         <p>Copyrights at <a href="">Shop</a></p>
     </footer>
 
-    <script>
-        $(".menu-btn").click(function() {
-            $(".navbar.menu").toggleClass("active");
-            $(".menu-btn i").toggleClass("active");
 
-        });
-    </script>
+
 </body>
 
 </html>

@@ -22,9 +22,9 @@
         </div>
         <ul class="menu">
             <?php
-            if (!isset($_SESSION["user"])) { ?>
+            if (!isset($_SESSION["logovani-korinik"])) { ?>
                 <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Registar</a></li>
+                <li><a href="">Registar</a></li>
             <?php } else { ?>
                 <li><a href="logout.php">Logout</a></li>
                 <li><a href="home.php">Home</a></li>
@@ -35,26 +35,37 @@
             </div>
     </nav>
 
-    <section class="my-5 py-5">
-        <div class="container text-center mt-3 pt-5">
-            <h2 class="form-weight-bold">Login</h2>
+    <section class="col-12">
+        <div class="container text-center  mt-3 pt-5">
+            <h2 class="form-weight-bold">Add Product</h2>
             <hr class="hr">
         </div>
-        <div class="mx-auto container">
-            <form action="../controler/loginController.php" id="login-form" method="post">
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="text" class="form-control" id="login-email" name="email" placeholder="Email">
+        <div class="container">
+            <form action="" id="login-form" method="post">
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Example label</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
                 </div>
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" class="form-control" id="login-password" name="password" placeholder="Password">
+                <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
                 </div>
-                <div class="form-group">
+                <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                </div>
+                <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                </div>
 
-                    <input type="submit" class="btn" name="submit" id="login-btn" value="Login">
-                </div>
-            </form>
+                <input type="submit" class="btn" name="submit" id="login-btn" value="Register">
+        </div>
+        </form>
         </div>
     </section>
 

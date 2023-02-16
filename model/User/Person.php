@@ -1,24 +1,23 @@
 <?php
 abstract class Person
 {
-	protected int $id;
+	protected  $id;
 	protected string $name;
 	protected string $lastname;
 	protected string $email;
 	protected string $password;
-
 	protected string $city;
-	protected string $streetName;
+	protected string $address;
 
-	public function __construct($id, $name, $lastname, $email, $password, $city, $streetName)
+	public function __construct($name, $lastname, $city,  $address, $email, $password)
 	{
-		$this->id = $id;
+
 		$this->name = $name;
 		$this->lastname = $lastname;
 		$this->email = $email;
 		$this->password = $password;
 		$this->city = $city;
-		$this->streetName = $streetName;
+		$this->address = $address;
 	}
 
 
@@ -62,8 +61,8 @@ abstract class Person
 
 
 
-	abstract public function getStreetName();
+	abstract public function getAddress();
 
 
-	abstract public function setStreetName(string $streetName);
+	abstract public function setAddress(string $address);
 }

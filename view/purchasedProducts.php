@@ -92,13 +92,7 @@ include_once "../loaddata.php";
         <p>Copyrights at <a href="">Shop</a></p>
     </footer>
 
-    <script>
-        $(".menu-btn").click(function() {
-            $(".navbar.menu").toggleClass("active");
-            $(".menu-btn i").toggleClass("active");
 
-        });
-    </script>
 </body>
 
 </html>

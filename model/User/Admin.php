@@ -5,10 +5,10 @@ class Admin extends Person
 
     protected $tip;
 
-    public function __construct($id, $name, $lastname, $email, $password, $city, $streetName, $tip = 1)
+    public function __construct($id, $name, $lastname, $email, $password, $city, $address, $tip = 1)
     {
 
-        parent::__construct($id, $name, $lastname, $email, $password, $city, $streetName);
+        parent::__construct($id, $name, $lastname, $email, $password, $city, $address);
         $this->tip = $tip;
     }
 
@@ -85,15 +85,15 @@ class Admin extends Person
         $this->city = $city;
     }
 
-    public function getStreetName()
+    public function getAddress()
     {
-        return $this->streetName;
+        return $this->address;
     }
 
 
-    public function setStreetName(string $streetName)
+    public function setAddress($address)
     {
-        $this->streetName = $streetName;
+        $this->address = $address;
     }
 
 

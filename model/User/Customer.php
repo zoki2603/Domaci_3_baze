@@ -1,13 +1,14 @@
 <?php
-
+include_once "Person.php";
 class Customer extends Person
 {
+
     protected $tip;
     protected float $money;
-    public function __construct($id, $name, $lastname, $email, $password, $money, $city, $streetName, $tip = 0)
+    public function __construct($id, $name, $lastname, $city,  $address, $email, $password, $money, $tip = 0)
     {
-        parent::__construct($id, $name, $lastname, $email, $password, $city, $streetName);
-        $this->money = $money;
+        parent::__construct($name, $lastname, $city,  $address, $email, $password);
+        $this->money = 1000;
 
         $this->tip = $tip;
     }
@@ -16,6 +17,25 @@ class Customer extends Person
     public  function getNameAndLastName()
     {
         return $this->name . " " . $this->lastname;
+    }
+
+    public static function register($name, $lastname,  $city, $address, $email,  $password, $conn, $money = 1000, $tip = 0)
+    {
+        try {
+            $query  = "INSERT INTO users (name,lastname,city,address,email,password,money,tip) 
+            VALUE ('$name','$lastname','$email','$password','$city','$address','$money','$tip')";
+            $result = mysqli_query($conn->getConnection(), $query);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function getAllUsers($conn)
+    {
+        $q = "SELECT * FROM users";
+        $resalt = mysqli_query($conn->getConnection(), $q);
+        return $resalt;
     }
 
 
@@ -110,15 +130,15 @@ class Customer extends Person
         $this->city = $city;
     }
 
-    public function getStreetName()
+    public function getAddress()
     {
-        return $this->streetName;
+        return $this->address;
     }
 
 
-    public function setStreetName(string $streetName)
+    public function setAddress(string $address)
     {
-        $this->streetName = $streetName;
+        $this->address = $address;
     }
 
 
@@ -136,6 +156,6 @@ class Customer extends Person
     public function __toString()
     {
         return "Postovani  {$this->getNameAndLastName()} prozvodi ce biti poslati na adresu 
-        {$this->getCity()} {$this->getStreetName()}.";
+        {$this->getCity()} {$this->getAddress()}.";
     }
 }

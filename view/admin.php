@@ -22,14 +22,13 @@ include_once "../loaddata.php";
             <h1>SHOP</h1>
         </div>
         <ul class="menu">
-            <?php
-            if (!isset($_SESSION["logovani-korinik"])) { ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="">Registar</a></li>
-            <?php } else { ?>
-                <li><a href="admin.php">Admin</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            <?php } ?>
+
+
+            <li><a href="">Registar</a></li>
+
+            <li><a href="admin.php">Admin</a></li>
+            <li><a href="logout.php">Logout</a></li>
+
             <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
 
             <div class="menu-btn">
@@ -37,10 +36,12 @@ include_once "../loaddata.php";
             </div>
     </nav>
     <h1 class="pheading">ADMIN</h1>
-
+    <a href="addProduct.php"> <input type="submit" name="" value="Add" style="margin-left: 93%;" class="btn btn-success btn-lg"></a>
     <sectoin class="sec">
+
         <div class="products">
             <!-- Start Card -->
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -49,29 +50,29 @@ include_once "../loaddata.php";
                         <th scope="col">Slika</th>
                         <th scope="col">Cena</th>
                         <th scope="col">Kolicina</th>
-                        <th scope="col">Izbrisi</th>
                         <th scope="col">Uredi</th>
+                        <th scope="col">Izbrisi</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <?php foreach ($nizProizvoda as $key => $product) { ?>
-                        <form action="" method="">
-                            <tr>
-                                <th scope="row"><?php echo $key + 1 ?></th>
-                                <td><?php echo $product->productName; ?></td>
-                                <td><?php echo $product->image; ?></td>
-                                <td><?php echo $product->price; ?>$</td>
-                                <td><?php echo $product->amount; ?></td>
-                                <td><input type="submit" name="" value="Delete" class="btn btn-danger"></td>
-                                <td><input type="submit" name="edit" value="Edit" class="btn btn-info"></td>
 
-                            </tr>
+                    <form action="" method="">
+                        <tr>
+                            <th scope="row"><?php echo $key + 1 ?></th>
+                            <td><?php echo "naziv" ?></td>
+                            <td><?php ?></td>
+                            <td><?  ?>$</td>
+                            <td><?  ?></td>
+                            <td><input type="submit" name="edit" value="Edit" class="btn btn-info"></td>
+                            <td><input type="submit" name="" value="Delete" class="btn btn-danger"></td>
 
-                        <?php } ?>
-
-                        </form>
                         </tr>
+
+
+
+                    </form>
+                    </tr>
                 </tbody>
             </table>
             <!-- End Card -->
@@ -83,13 +84,7 @@ include_once "../loaddata.php";
         <p>Copyrights at <a href="">Shop</a></p>
     </footer>
 
-    <script>
-        $(".menu-btn").click(function() {
-            $(".navbar.menu").toggleClass("active");
-            $(".menu-btn i").toggleClass("active");
 
-        });
-    </script>
 </body>
 
 </html>
