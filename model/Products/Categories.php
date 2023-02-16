@@ -2,7 +2,7 @@
 class Category
 
 {
-    protected $categoryName;
+    protected $name;
 
     public function __construct()
     {
@@ -11,12 +11,32 @@ class Category
 
     public function getCategoryName()
     {
-        return $this->categoryName;
+        return $this->name;
     }
 
 
-    public function setCategoryName($categoryName)
+    public function setCategoryName($name)
     {
-        $this->categoryName = $categoryName;
+        $this->name = $name;
+    }
+    public static function addCategory($name, $conn)
+    {
+        try {
+            $q = "INSERT INTO category (name) VALUE ('$name')";
+            $resalt = mysqli_query($conn->getConnection(), $q);
+            return $resalt;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public static function getAllCategory($conn)
+    {
+        try {
+            $q = "SELECT * FROM category";
+            $resalt = mysqli_query($conn->getConnection(), $q);
+            return $resalt;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }

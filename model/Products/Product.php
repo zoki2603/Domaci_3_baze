@@ -12,14 +12,60 @@ class Product implements PDV
 
 
 
-    public function __construct($id, $name, $price, $image, $amount)
+    public function __construct($id, $name, $price, $image, $quantity)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->image = $image;
+        $this->quantity = $quantity;
+        //     $this->category = $category;
     }
 
+    public static function addProduct($name, $price, $image, $description, $quantity, $category, $conn)
+    {
+        try {
+            $q = "INSERT INTO products (name, price, image, description,quantity,category_id) 
+            VALUES ('$name', $price, '$image', '$description',$quantity,$category)";
+            $result = mysqli_query($conn->getConnection(), $q);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function getAllProducts($conn)
+    {
+        try {
+            $q = "SELECT * FROM products";
+            $result = mysqli_query($conn->getConnection(), $q);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function deleteProduct($id, $conn)
+    {
+        try {
+            $q = "DELETE FROM products WHERE id =$id";
+            $result = mysqli_query($conn->getConnection(), $q);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function updateProduct($name, $price, $image, $description, $quantity, $category, $id, $conn)
+    {
+        try {
+            $q = "UPDATE products SET name = '$name', price = $price, image = '$image', description = '$description',quantity = $quantity,category_id = $category WHERE id =$id";
+            $result = mysqli_query($conn->getConnection(), $q);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
     public function getId()
     {
         return $this->id;

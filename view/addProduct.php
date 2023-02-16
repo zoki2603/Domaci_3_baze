@@ -1,3 +1,13 @@
+<?php
+session_start();
+include_once "../DB/dbconnect.php";
+include_once "../model/Products/Categories.php";
+$conn = DB::getInstance();
+$categorys = Category::getAllCategory($conn);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,49 +31,58 @@
             <h1>SHOP</h1>
         </div>
         <ul class="menu">
-            <?php
-            if (!isset($_SESSION["logovani-korinik"])) { ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="">Registar</a></li>
-            <?php } else { ?>
-                <li><a href="logout.php">Logout</a></li>
-                <li><a href="home.php">Home</a></li>
-                <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
-            <?php } ?>
+
+
+            <li><a href="">Registar</a></li>
+            <li><a href="admin.php">Home</a></li>
+            <li><a href="logout.php">Logout</a></li>
             <div class="menu-btn">
                 <i class="fa fa-bars"></i>
             </div>
     </nav>
 
-    <section class="col-12">
+    <section class="col-6 ">
         <div class="container text-center  mt-3 pt-5">
             <h2 class="form-weight-bold">Add Product</h2>
             <hr class="hr">
         </div>
-        <div class="container">
-            <form action="" id="login-form" method="post">
+        <div class="container text-center row justify-content-md-center">
+            <form action="../controler/AdminController.php" class="row justify-content-md-center" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label">Example label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input placeholder">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Product name">
                 </div>
                 <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="price" id="price" placeholder="Price">
                 </div>
                 <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="image" id="image" placeholder="Image">
                 </div>
                 <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                    <label for="quantety" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" name="quantity" id="quantety" placeholder="Quantity">
                 </div>
                 <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Another label</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+                    <label class="" for="category">Category</label>
+                    <select class="form-select" name="category_id" id="category">
+
+                        <?php
+                        foreach ($categorys as $cat) { ?>
+                            <option value="<?php echo $cat["id"] ?>"><?php echo $cat["name"] ?></option>
+
+                        <?php } ?>
+
+
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Descritipon "></textarea>
                 </div>
 
-                <input type="submit" class="btn" name="submit" id="login-btn" value="Register">
+                <input type="submit" class="btn btn-success" name="add" id="login-btn" value="Add">
         </div>
         </form>
         </div>

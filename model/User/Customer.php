@@ -39,18 +39,18 @@ class Customer extends Person
     }
 
 
-    public function buy(Cart $cart, Product $product, $quantity = 1)
-    {
-        if ($this->money < $cart->sumAll()) {
-            echo "Nemate dovoljno novca da kupite proizvod";
-        } else {
-            if ($product->reduceAmount($quantity)) {
-                $this->money -= $cart->sumAll();
-            } else {
-                echo "Nema vise proizvoda";
-            }
-        }
-    }
+    // public function buy(Cart $cart, Product $product, $quantity = 1)
+    // {
+    //     if ($this->money < $cart->sumAll()) {
+    //         echo "Nemate dovoljno novca da kupite proizvod";
+    //     } else {
+    //         if ($product->reduceAmount($quantity)) {
+    //             $this->money -= $cart->sumAll();
+    //         } else {
+    //             echo "Nema vise proizvoda";
+    //         }
+    //     }
+    // }
     public function getId()
     {
         return $this->id;

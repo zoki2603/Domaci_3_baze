@@ -1,5 +1,10 @@
 <?php
-include_once "../loaddata.php";
+session_start();
+include_once "../DB/dbconnect.php";
+include_once "../model/Products/Product.php";
+$conn = DB::getInstance();
+$products = Product::getAllProducts($conn);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +41,11 @@ include_once "../loaddata.php";
             </div>
     </nav>
     <h1 class="pheading">ADMIN</h1>
-    <a href="addProduct.php"> <input type="submit" name="" value="Add" style="margin-left: 93%;" class="btn btn-success btn-lg"></a>
+
+    <a href="addProduct.php"> <input type="submit" name="" value="Add Product" style="margin-left:80%;" class="btn btn-success btn-lg"></a>
+    <a href="addCategory.php"> <input type="submit" name="" value="Add Category" style="margin-left: 85%;" class="btn btn-primary btn-lg"></a>
+
+
     <sectoin class="sec">
 
         <div class="products">
@@ -50,28 +59,31 @@ include_once "../loaddata.php";
                         <th scope="col">Slika</th>
                         <th scope="col">Cena</th>
                         <th scope="col">Kolicina</th>
+                        <th scope="col">Opis</th>
                         <th scope="col">Uredi</th>
                         <th scope="col">Izbrisi</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($products as $key => $product) { ?>
+
+                        <form action="../controler/AdminController.php" method="POST">
+                            <tr>
+                                <th scope="row"><?php echo $key + 1 ?></th>
+                                <td><?php echo $product["name"] ?></td>
+                                <td><img src="../img/<?php echo $product["image"] ?>" alt="" width="150"></td>
+                                <td><?php echo $product["price"] ?>$</td>
+                                <td><?php echo $product["quantity"] ?></td>
+                                <td><?php echo $product["description"] ?></td>
+                                <td><a href="updateProduct.php?id=<?php echo $product["id"] ?>" class="btn btn-info">Edit</a></td>
+                                <td><input type="submit" name="deleteProduct" value="Delete" class="btn btn-danger"></td>
+                                <input type="hidden" name="id" value="<?php echo $product["id"] ?>" class="btn btn-info">
+                            </tr>
+                        </form>
+
+                    <?php } ?>
 
 
-                    <form action="" method="">
-                        <tr>
-                            <th scope="row"><?php echo $key + 1 ?></th>
-                            <td><?php echo "naziv" ?></td>
-                            <td><?php ?></td>
-                            <td><?  ?>$</td>
-                            <td><?  ?></td>
-                            <td><input type="submit" name="edit" value="Edit" class="btn btn-info"></td>
-                            <td><input type="submit" name="" value="Delete" class="btn btn-danger"></td>
-
-                        </tr>
-
-
-
-                    </form>
                     </tr>
                 </tbody>
             </table>

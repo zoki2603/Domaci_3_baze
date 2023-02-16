@@ -22,7 +22,7 @@
         </div>
         <ul class="menu">
             <?php
-            if (!isset($_SESSION["logovani-korinik"])) { ?>
+            if (!isset($_SESSION["user"])) { ?>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="">Registar</a></li>
             <?php } else { ?>
