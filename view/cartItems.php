@@ -1,10 +1,7 @@
 <?php
+include_once "../model/User/Customer.php";
 include_once "../controler/CartController.php";
 include_once "../model/Cart/Cart.php";
-// if (!session_start()) {
-//     session_start();
-// }
-
 
 
 ?>
@@ -72,9 +69,10 @@ include_once "../model/Cart/Cart.php";
                                 <td><?php echo $product->priceWithPDV() ?>$</td>
                                 <td><?php echo $product->quantity; ?></td>
                                 <td><?php echo $product->sumPrice() ?></td>
-
-                                <input type="hidden" name="id" value="<?php echo $product->id ?>">
-
+                                <input type="hidden" name="userID" value="<?php echo $_SESSION["user"]->getId(); ?>">
+                                <!-- <input type="hidden" name="id" value="<?php echo $product->id ?>">
+                                <input type="hidden" name="qunatity" value="<?php echo $product->quantity; ?>"> -->
+                                <input type="hidden" name="allPrce" value="<?php echo $cart->sumAll() ?>">
                                 <td><input type="submit" name="removeProduct" value="Delete" class="btn btn-danger"></td>
 
                             </tr>
@@ -85,7 +83,7 @@ include_once "../model/Cart/Cart.php";
                         </tr>
                         <tr>
                             <td colspan="7">
-                                <input style="margin-left: 83%; padding: 10px 40px;" type="submit" name="buy-all" class="btn btn-group-lg btn-outline-primary" value="Buy">
+                                <input style="margin-left: 83%; padding: 10px 40px;" type="submit" name="buyAll" class="btn btn-group-lg btn-outline-primary" value="Buy">
                             </td>
                         </tr>
                         <tr>

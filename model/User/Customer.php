@@ -7,7 +7,7 @@ class Customer extends Person
     protected float $money;
     public function __construct($id, $name, $lastname, $city,  $address, $email, $password, $money, $tip = 0)
     {
-        parent::__construct($name, $lastname, $city,  $address, $email, $password);
+        parent::__construct($id, $name, $lastname, $city,  $address, $email, $password);
         $this->money = 1000;
 
         $this->tip = $tip;
@@ -38,19 +38,6 @@ class Customer extends Person
         return $resalt;
     }
 
-
-    // public function buy(Cart $cart, Product $product, $quantity = 1)
-    // {
-    //     if ($this->money < $cart->sumAll()) {
-    //         echo "Nemate dovoljno novca da kupite proizvod";
-    //     } else {
-    //         if ($product->reduceAmount($quantity)) {
-    //             $this->money -= $cart->sumAll();
-    //         } else {
-    //             echo "Nema vise proizvoda";
-    //         }
-    //     }
-    // }
     public function getId()
     {
         return $this->id;

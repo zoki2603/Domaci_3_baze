@@ -9,9 +9,9 @@ abstract class Person
 	protected string $city;
 	protected string $address;
 
-	public function __construct($name, $lastname, $city,  $address, $email, $password)
+	public function __construct($id, $name, $lastname, $city,  $address, $email, $password)
 	{
-
+		$this->id = $id;
 		$this->name = $name;
 		$this->lastname = $lastname;
 		$this->email = $email;

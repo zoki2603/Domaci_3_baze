@@ -1,5 +1,8 @@
 <?php
+
 include_once "PDV.php";
+include_once "../model/User/Customer.php";
+
 class Product implements PDV
 {
     public  $id;
@@ -66,6 +69,44 @@ class Product implements PDV
             echo $e->getMessage();
         }
     }
+    public static function buyProducts($id_product, $id_user, $price, $quantity, $date, $conn)
+
+    {
+        // Dohvati sve proizvode iz korpe
+        $products = $_SESSION['cart']->getProducts();
+
+        // Inicijalizacija niza za vrednosti
+        $values = array();
+
+        // Iteriranje kroz sve proizvode u korpi
+        foreach ($products as $product) {
+            $id_product = $product->getId();
+            $price = $product->getPrice();
+            $quantity = $product->getQuantity();
+            $date = date("Y-m-d H:i:s");
+
+            // Dodavanje vrednosti za upit
+            $values[] = "($id_product, $id_user, $price, $quantity, '$date')";
+
+            // Azuriranje kolicine proizvoda
+            $query = "UPDATE products SET quantity = quantity - $quantity WHERE id = $id_product";
+            $result = mysqli_query($conn->getConnection(), $query);
+        }
+
+        // Spajanje svih vrednosti u jedan string
+        $values = implode(",", $values);
+
+        // Upit za kupovinu proizvoda
+        $query = "INSERT INTO purchase (id_product, id_user, price, quantity, date) VALUES $values";
+
+        // Izvršavanje upita
+        if (mysqli_query($conn->getConnection(), $query)) {
+            echo "Uspesno ste kupili proizvode!";
+        } else {
+            echo "Error: " . $query . "<br>" . mysqli_error($conn->getConnection());
+        }
+    }
+
     public function getId()
     {
         return $this->id;
@@ -133,20 +174,6 @@ class Product implements PDV
             return 0;
         }
     }
-
-
-
-    // public function reduceAmount($quantity = 1)
-    // {
-    //     if ($this->amount >= $quantity) {
-    //         $this->amount -= $quantity;
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-
     public  function __toString()
     {
         return " Uspesno ste kupili  proizvode havala Vam na poseti.  ";

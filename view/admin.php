@@ -28,9 +28,8 @@ $products = Product::getAllProducts($conn);
         </div>
         <ul class="menu">
 
-
+            <li><a href="purchase.php">Purchase</a></li>
             <li><a href="">Registar</a></li>
-
             <li><a href="admin.php">Admin</a></li>
             <li><a href="logout.php">Logout</a></li>
 

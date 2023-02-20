@@ -1,17 +1,5 @@
 <?php
 
-
-// $host = "localhost";
-// $unmae = "root";
-// $password = "";
-
-// $db_name = "shop";
-
-// $conn = mysqli_connect($host, $unmae, $password, $db_name);
-
-// if (!$conn) {
-//     echo "Connection failed!";
-// }
 class DB
 {
     private static $instance = null;

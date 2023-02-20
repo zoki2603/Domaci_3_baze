@@ -51,3 +51,18 @@ if (isset($_POST["remove_all"])) {
     header("Location:../view/cartItems.php");
     exit();
 }
+if (isset($_POST["buyAll"])) {
+    if (!empty($_SESSION["cart"])) {
+        $id_user = $_POST["userID"];
+        $price = $_POST["allPrce"];
+        $date = date("d.m.Y  H:i:s");
+        foreach ($cart->products as $product) {
+            $id_product = $product->id;
+            $qunatity = intval($product->quantity);
+        }
+        Product::buyProducts($id_product, $id_user, $price, $qunatity, $date, $conn);
+        Cart::emptyCart();
+        header("Location:../view/home.php");
+        exit();
+    }
+}

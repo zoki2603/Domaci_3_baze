@@ -44,6 +44,10 @@ class Cart
         }
     }
 
+    public function getProducts()
+    {
+        return $this->products;
+    }
     public function sumAll()
     {
         $totalSum = 0;
