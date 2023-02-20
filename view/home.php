@@ -1,6 +1,10 @@
 <?php
+
+include_once "../DB/dbconnect.php";
+include_once "../model/Products/Product.php";
+$conn = DB::getInstance();
+$products = Product::getAllProducts($conn);
 session_start();
-// include_once "../loaddata.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,15 +52,15 @@ session_start();
         <div class="products">
             <!-- Start Card -->
             <?php
-            foreach ($_SESSION["proizvodi"] as $proizvod) { ?>
+            foreach ($products as $product) { ?>
                 <div class="card">
-                    <div class="img"><img style="width: 100%;" src="..//img/<?php echo $proizvod->image ?>" alt=""></div>
-                    <div class="desc">Opis</div>
-                    <div class="title"><?php echo $proizvod->productName ?></div>
+                    <div class="img"><img style="width: 100%;" src="..//img/<?php echo $product["image"] ?>" alt=""></div>
+
+                    <div class="title"><?php echo $product["name"] ?></div>
                     <div class="box">
-                        <div class="price"><?php echo $proizvod->price ?>$</div>
+                        <div class="price"><?php echo $product["price"] ?>$</div>
                         <?php if (isset($_SESSION["user"])) { ?>
-                            <a href="singleProduct.php?id=<?php echo $proizvod->id ?>"><button class="btn" name="buy-now">Buy Now</button></a>
+                            <a href="singleProduct.php?id=<?php echo $product["id"] ?>"><button class="btn" name="buy-now">Buy Now</button></a>
                         <?php } else {
                             "";
                         } ?>

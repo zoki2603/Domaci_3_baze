@@ -1,6 +1,10 @@
 <?php
+
+include_once "../DB/dbconnect.php";
+include_once "../model/Products/Product.php";
 session_start();
-// include_once "../loaddata.php";
+$conn = DB::getInstance();
+$products = Product::getAllProducts($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,25 +48,21 @@ session_start();
             <!-- Start Card -->
             <?php
 
-            foreach ($_SESSION["proizvodi"] as $key => $product) {   ?>
+            foreach ($products as $key => $product) {   ?>
 
-                <?php if (intval($product->id) == intval($_GET['id'])) { ?>
-                    <form action="home.php" method="POST">
+                <?php if ($product["id"] == $_GET['id']) { ?>
+                    <form action="../controler/CartController.php" method="POST">
 
                         <div class="card">
-                            <div class="img"><img src="../img/<?php echo $product->image ?>" alt=""></div>
-                            <div class="desc">Opis</div>
-                            <div class="title"><?php echo $product->productName ?></div>
+                            <div class="img"><img src="../img/<?php echo $product["image"] ?>" width="500" alt=""></div>
+                            <div class="desc"><?php echo $product["description"] ?></div>
+                            <div class="title"><?php echo $product["name"] ?></div>
                             <input type="number" name="quantity" class="form-control" min="0" value="1" />
-                            <input type="hidden" name="name" class="form-control" value="<?php echo $product->productName ?>" />
-                            <input type="hidden" name="price" class="form-control" value="<?php echo $product->price ?>" />
-                            <input type="hidden" name="id" value="<?php echo $product->id ?>">
-                            <input type="hidden" name="amaunt" value="<?php $product->amaunt; ?>">
-                            <input type="hidden" name="image" value="<?php echo $product->image ?>">
+                            <input type="hidden" name="id" value="<?php echo $product["id"] ?>">
                             <div class="box">
-                                <div class="price"><?php echo $product->price ?>$</div>
-                                <?php if (isset($_SESSION["logovani-korinik"])) { ?>
-                                    <button class="btn" name="add_product">Buy Now</button>
+                                <div class="price"><?php echo $product["price"] ?>$</div>
+                                <?php if (isset($_SESSION["user"])) { ?>
+                                    <button class="btn" name="addToCart">Buy Now</button>
                                 <?php } else {
                                     "";
                                 } ?>

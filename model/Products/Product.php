@@ -2,17 +2,17 @@
 include_once "PDV.php";
 class Product implements PDV
 {
-    public int $id;
-    public string $name;
+    public  $id;
+    public  $name;
     public float $price;
     public $image;
     public  $description;
-    public  $quantity;
+    public int $quantity;
     public Category $category;
 
 
 
-    public function __construct($id, $name, $price, $image, $quantity)
+    public function __construct($id, $name, $price, $image, int $quantity)
     {
         $this->id = $id;
         $this->name = $name;
@@ -108,18 +108,33 @@ class Product implements PDV
     {
         $percentage = 0.2;
         $sum =  $this->getPrice() * $percentage;
+        // var_dump($sum);
         return number_format($sum, 2);
     }
+
+
     public function priceWithPDV()
     {
-        $sum = $this->getPrice() + $this->PDV();
-        return number_format($sum, 2);
+        $sum = $this->getPrice() + floatval($this->PDV());
+        // var_dump($sum);
+
+        return floatval($sum);
     }
+
+
     public function sumPrice()
     {
-        $sum = $this->priceWithPDV() * $this->quantity;
-        return number_format($sum, 2);
+        if (is_numeric(floatval($this->priceWithPDV())) && is_numeric($this->quantity)) {
+
+            $sum = $this->priceWithPDV() * $this->quantity;
+            return number_format($sum, 2);
+        } else {
+
+            return 0;
+        }
     }
+
+
 
     // public function reduceAmount($quantity = 1)
     // {
@@ -130,10 +145,7 @@ class Product implements PDV
     //         return false;
     //     }
     // }
-    public function removeFromCart(Cart $cart)
-    {
-        return $cart->removeProduct($this);
-    }
+
 
     public  function __toString()
     {

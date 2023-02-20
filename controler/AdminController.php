@@ -31,7 +31,7 @@ if (isset($_POST["add"])) {
             $fileSize =  $imageName["size"];
             $tmpName =  $imageName["tmp_name"];
 
-            $validImageExtension = ['jpg', 'jpeg', 'png'];
+            $validImageExtension = ['jpg', 'jpeg', 'png', 'webp'];
             $imageExtension = explode('.', $fileName);
             $imageExtension = strtolower(end($imageExtension));
             if (!in_array($imageExtension, $validImageExtension)) {
@@ -84,7 +84,7 @@ if (isset($_POST["updateProduct"])) {
             $fileSize =  $imageName["size"];
             $tmpName =  $imageName["tmp_name"];
 
-            $validImageExtension = ['jpg', 'jpeg', 'png'];
+            $validImageExtension = ['jpg', 'jpeg', 'png', 'webp'];
             $imageExtension = explode('.', $fileName);
             $imageExtension = strtolower(end($imageExtension));
             if (!in_array($imageExtension, $validImageExtension)) {

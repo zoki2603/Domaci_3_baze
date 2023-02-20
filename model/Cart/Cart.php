@@ -1,5 +1,5 @@
 <?php
-
+// include_once "../Products/Product.php";
 class Cart
 {
     public $products;
@@ -8,33 +8,51 @@ class Cart
     {
         $this->products = array();
     }
+
+
+
+
     public function addProduct(Product $product, $quantity)
     {
-
         foreach ($this->products as $key => $p) {
             if ($p->id == $product->id) {
                 $p->quantity += $quantity;
                 return;
             }
         }
+        $product->quantity = $quantity;
         $this->products[] = $product;
     }
 
-    public function removeProduct(Product $product)
+    public function getProductById($id)
     {
-        // Proveravamo da li je proizvod u korpi
-        foreach ($this->products as $key => $p) {
-            if ($p->id == $product->id) {
+        foreach ($this->products as $product) {
+            if ($product->id == $id) {
+                return $product;
+            }
+        }
+        return null;
+    }
+
+    public function removeProduct($id)
+    {
+        foreach ($this->products as $key => $product) {
+            if ($product->getId() == $id) {
                 unset($this->products[$key]);
+                break;
             }
         }
     }
+
     public function sumAll()
     {
         $totalSum = 0;
         foreach ($this->products as $product) {
-            $totalSum += $product->getQuantity() * $product->priceWithPDV();
+            if (is_numeric($product->getQuantity())) {
+                $totalSum += $product->getQuantity() * floatval($product->priceWithPDV());
+            }
         }
+
         return number_format($totalSum, 2);
     }
     public static function emptyCart()

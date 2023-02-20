@@ -1,6 +1,11 @@
 <?php
-session_start();
-include_once "../loaddata.php";
+include_once "../controler/CartController.php";
+include_once "../model/Cart/Cart.php";
+// if (!session_start()) {
+//     session_start();
+// }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -59,21 +64,18 @@ include_once "../loaddata.php";
                 <tbody>
 
                     <?php foreach ($cart->products as $key => $product) { ?>
-                        <form action="" method="POST">
+                        <form action="../controler/CartController.php" method="POST">
                             <tr>
                                 <th scope="row"><?php echo $key + 1 ?></th>
-                                <td><?php echo $product->productName; ?></td>
+                                <td><?php echo $product->name; ?></td>
                                 <td><?php echo $product->price; ?>$</td>
                                 <td><?php echo $product->priceWithPDV() ?>$</td>
                                 <td><?php echo $product->quantity; ?></td>
                                 <td><?php echo $product->sumPrice() ?></td>
-                                <input type="hidden" name="name" value="<?php echo $product->productName ?>" />
-                                <input type="hidden" name="price" value="<?php echo $product->price ?>" />
+
                                 <input type="hidden" name="id" value="<?php echo $product->id ?>">
-                                <input type="hidden" name="image" value="<?php echo $product->image ?>">
-                                <input type="hidden" name="quantity" value="<?php echo $product->quantity ?>">
-                                <input type="hidden" name="amaunt" value="<?php echo $product->amaunt ?>">
-                                <td><input type="submit" name="remove_product" value="Delete" class="btn btn-danger"></td>
+
+                                <td><input type="submit" name="removeProduct" value="Delete" class="btn btn-danger"></td>
 
                             </tr>
 
