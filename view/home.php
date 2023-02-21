@@ -2,6 +2,7 @@
 
 include_once "../DB/dbconnect.php";
 include_once "../model/Products/Product.php";
+include_once "../model/Cart/Cart.php";
 $conn = DB::getInstance();
 $products = Product::getAllProducts($conn);
 session_start();
@@ -34,7 +35,19 @@ session_start();
             <?php } else { ?>
                 <li><a href="home.php">Home</a></li>
                 <li><a href="logout.php">Logout</a></li>
-                <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="cartItems.php"><span>
+
+                            <?php
+
+                            if (isset($_SESSION["cart"])) {
+                                $cart = $_SESSION["cart"];
+                                $itemCount = $cart->getProductCount();
+                                echo  $itemCount;
+                            } else {
+                                echo "Korpa je prazna.";
+                            }
+                            ?>
+                        </span><i class="fas fa-shopping-cart"></i></a></li>
             <?php } ?>
             <div class="menu-btn">
                 <i class="fa fa-bars"></i>

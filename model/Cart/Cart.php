@@ -43,6 +43,14 @@ class Cart
             }
         }
     }
+    public  function getProductCount()
+    {
+        $count = 0;
+        foreach ($this->products as $product) {
+            $count += $product->getQuantity();
+        }
+        return $count;
+    }
 
     public function getProducts()
     {
