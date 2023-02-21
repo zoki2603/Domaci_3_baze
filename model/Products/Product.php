@@ -191,20 +191,20 @@ class Product implements PDV
     public static function sumAllProducts($quantity, $price)
     {
 
-        $sum = $price * $quantity;
+        $sum = floatval($price * $quantity);
         return number_format($sum, 2, '.', '');
     }
-    // public function sumPrice()
-    // {
-    //     if (is_numeric(floatval($this->priceWithPDV())) && is_numeric($this->quantity)) {
+    public function sumPrice()
+    {
+        if (is_numeric(floatval($this->priceWithPDV())) && is_numeric($this->quantity)) {
 
-    //         $sum = $this->priceWithPDV() * $this->quantity;
-    //         return number_format($sum, 2);
-    //     } else {
+            $sum = $this->priceWithPDV() * $this->quantity;
+            return number_format($sum, 2);
+        } else {
 
-    //         return 0;
-    //     }
-    // }
+            return 0;
+        }
+    }
     public  function __toString()
     {
         return " Uspesno ste kupili  proizvode havala Vam na poseti.  ";
