@@ -75,10 +75,10 @@ class Product implements PDV
         // Dohvati sve proizvode iz korpe
         $products = $_SESSION['cart']->getProducts();
 
-        // Inicijalizacija niza za vrednosti
+
         $values = array();
 
-        // Iteriranje kroz sve proizvode u korpi
+        // svi proizvode u korpi
         foreach ($products as $product) {
             $id_product = $product->getId();
             $price = $product->getPrice();
@@ -96,14 +96,39 @@ class Product implements PDV
         // Spajanje svih vrednosti u jedan string
         $values = implode(",", $values);
 
-        // Upit za kupovinu proizvoda
+        //  kupovinu proizvoda
         $query = "INSERT INTO purchase (id_product, id_user, price, quantity, date) VALUES $values";
 
-        // Izvršavanje upita
+        // Izvrsi  upit
         if (mysqli_query($conn->getConnection(), $query)) {
             echo "Uspesno ste kupili proizvode!";
         } else {
             echo "Error: " . $query . "<br>" . mysqli_error($conn->getConnection());
+        }
+    }
+    public static function getAllPurchaseProducts($conn)
+    {
+        try {
+            $query = "SELECT users.name as username,users.lastname,users.address,users.city, products.name as productName, purchase.quantity, purchase.price ,purchase.date ,purchase.id_user 
+            FROM purchase
+            INNER JOIN users ON purchase.id_user = users.id
+            INNER JOIN products ON purchase.id_product = products.id";
+            $result = mysqli_query($conn->getConnection(), $query);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public static function getAllPurchase($conn)
+    {
+        try {
+            $query = "SELECT DISTINCT users.name,users.lastname,purchase.date,purchase.id_user
+            FROM purchase
+            INNER JOIN users ON purchase.id_user = users.id ";
+            $result = mysqli_query($conn->getConnection(), $query);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
     }
 

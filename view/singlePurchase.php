@@ -3,13 +3,12 @@
 include_once "../DB/dbconnect.php";
 include_once "../controler/CartController.php";
 include_once "../model/Cart/Cart.php";
-include_once "../model/User/Customer.php";
 
 $conn = DB::getInstance();
-$allUsers =  Customer::getAllUsers($conn);
-// var_dump($id);
-// die;
-$allPurchase = Product::getAllPurchase($conn);
+
+$purchase = Product::getAllPurchaseProducts($conn);;
+$id_user = $_GET["id"];
+$purchase_date = $_GET["date"];
 
 ?>
 <!DOCTYPE html>
@@ -45,7 +44,7 @@ $allPurchase = Product::getAllPurchase($conn);
                 <i class="fa fa-bars"></i>
             </div>
     </nav>
-    <h1 class="pheading">ORDERS</h1>
+    <h1 class="pheading">Purchase Product</h1>
 
     <sectoin class="sec">
         <div class="products">
@@ -54,26 +53,57 @@ $allPurchase = Product::getAllPurchase($conn);
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Ime i Prezime Kupca</th>
-                        <th scope="col">Datum Kupovine</th>
-                        <th scope="col">Vidi Detalje Kupovine</th>
+                        <th scope="col">Grad</th>
+                        <th scope="col">Adresa Stanovanja</th>
+                        <th scope="col">Ime Proizvoda</th>
+                        <th scope="col">Kolicina </th>
+                        <th scope="col">Cena Proizvoda</th>
+                        <th scope="col">Datum Porudzbine</th>
+                        <th scope="col">Poruci</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <?php foreach ($allPurchase as $key => $purchase) { ?>
+                    <?php while ($row = mysqli_fetch_assoc($purchase)) { ?>
+
+                        <?php if ($row["id_user"] == $id_user && $row["date"] == $purchase_date) { ?>
+
+
+                            <form action="" method="POST">
+                                <tr>
+                                    <th scope="row"><?php echo 1 ?></th>
+                                    <td><?php echo $row["username"] . ' ' . $row["lastname"]; ?></td>
+                                    <td><?php echo $row["city"] ?></td>
+                                    <td><?php echo $row["address"] ?></td>
+                                    <td><?php echo $row["productName"] ?></td>
+                                    <td><?php echo $row["quantity"] ?></td>
+                                    <td><?php echo $row["price"] ?>$</td>
+                                    <td><?php echo $row["date"] ?></td>
+                                    <td><input type="submit" name="order" value="Oreder" class="btn btn-success"></td>
+
+
+
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
+
                         <tr>
-                            <th scope="row"><?php echo $key + 1 ?></th>
-                            <td><?php echo $purchase["name"] . ' ' . $purchase["lastname"]; ?></td>
-                            <td><?php echo $purchase["date"] ?></td>
-                            <input type="hidden" name="date" value="<?php echo $purchase["date"] ?>">
-                            <td>
-                                <a href="singlePurchase.php?id=<?php echo $purchase["id_user"] ?>&date=<?php echo $purchase["date"] ?>"> <input type="submit" name="onePurchase" class="btn btn-info" value="View Purchase"></a>
-                                <input type="hidden" name="id_user" value="<?php echo $purchase["id_user"] ?>">
-                            </td>
+                            <td colspan="3">Ukupna Cena: <?php echo $cart->sumAll() ?>$ </td>
                         </tr>
-                    <?php } ?>
+                        <tr>
+                            <td colspan="8" style="color: red;font-size: large;text-align: center;"> </td>
+
+                        </tr>
+                            </form>
+                            <tr>
+                                <td>
+                                <td colspan="8" style="color: red;font-size: large;text-align: center;"> </td>
+                                </td>
+                            </tr>
+                            </tr>
                 </tbody>
             </table>
+
         </div>
     </sectoin>
 
