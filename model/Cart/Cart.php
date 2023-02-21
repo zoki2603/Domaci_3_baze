@@ -67,6 +67,7 @@ class Cart
 
         return number_format($totalSum, 2);
     }
+
     public static function emptyCart()
     {
         unset($_SESSION['cart']);

@@ -58,6 +58,7 @@ $purchase_date = $_GET["date"];
                         <th scope="col">Ime Proizvoda</th>
                         <th scope="col">Kolicina </th>
                         <th scope="col">Cena Proizvoda</th>
+                        <th scope="col">Cena Proizvoda sa PDV</th>
                         <th scope="col">Datum Porudzbine</th>
                         <th scope="col">Poruci</th>
                     </tr>
@@ -71,25 +72,24 @@ $purchase_date = $_GET["date"];
 
                             <form action="" method="POST">
                                 <tr>
-                                    <th scope="row"><?php echo 1 ?></th>
+                                    <th scope="row"><?php echo "#" ?></th>
                                     <td><?php echo $row["username"] . ' ' . $row["lastname"]; ?></td>
                                     <td><?php echo $row["city"] ?></td>
                                     <td><?php echo $row["address"] ?></td>
                                     <td><?php echo $row["productName"] ?></td>
                                     <td><?php echo $row["quantity"] ?></td>
                                     <td><?php echo $row["price"] ?>$</td>
+                                    <td><?php echo $row["priceWithPDV"] ?>$</td>
                                     <td><?php echo $row["date"] ?></td>
                                     <td><input type="submit" name="order" value="Oreder" class="btn btn-success"></td>
-
-
-
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Ukupna Cena: <?php echo Product::sumAllProducts($row["priceWithPDV"], $row["quantity"]) ?>$ </td>
                                 </tr>
                             <?php } ?>
                         <?php } ?>
 
-                        <tr>
-                            <td colspan="3">Ukupna Cena: <?php echo $cart->sumAll() ?>$ </td>
-                        </tr>
+
                         <tr>
                             <td colspan="8" style="color: red;font-size: large;text-align: center;"> </td>
 

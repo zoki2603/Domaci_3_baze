@@ -78,15 +78,16 @@ class Product implements PDV
 
         $values = array();
 
-        // svi proizvode u korpi
+        // svi proizvodi u korpi
         foreach ($products as $product) {
             $id_product = $product->getId();
             $price = $product->getPrice();
+            $priceWithPDV = $product->priceWithPDV();
             $quantity = $product->getQuantity();
             $date = date("Y-m-d H:i:s");
 
             // Dodavanje vrednosti za upit
-            $values[] = "($id_product, $id_user, $price, $quantity, '$date')";
+            $values[] = "($id_product, $id_user, $price,$priceWithPDV, $quantity, '$date')";
 
             // Azuriranje kolicine proizvoda
             $query = "UPDATE products SET quantity = quantity - $quantity WHERE id = $id_product";
@@ -97,7 +98,7 @@ class Product implements PDV
         $values = implode(",", $values);
 
         //  kupovinu proizvoda
-        $query = "INSERT INTO purchase (id_product, id_user, price, quantity, date) VALUES $values";
+        $query = "INSERT INTO purchase (id_product, id_user, price,priceWithPDV, quantity, date) VALUES $values";
 
         // Izvrsi  upit
         if (mysqli_query($conn->getConnection(), $query)) {
@@ -109,7 +110,7 @@ class Product implements PDV
     public static function getAllPurchaseProducts($conn)
     {
         try {
-            $query = "SELECT users.name as username,users.lastname,users.address,users.city, products.name as productName, purchase.quantity, purchase.price ,purchase.date ,purchase.id_user 
+            $query = "SELECT users.name as username,users.lastname,users.address,users.city, products.name as productName, purchase.quantity, purchase.price,purchase.priceWithPDV ,purchase.date ,purchase.id_user 
             FROM purchase
             INNER JOIN users ON purchase.id_user = users.id
             INNER JOIN products ON purchase.id_product = products.id";
@@ -187,18 +188,23 @@ class Product implements PDV
         return floatval($sum);
     }
 
-
-    public function sumPrice()
+    public static function sumAllProducts($quantity, $price)
     {
-        if (is_numeric(floatval($this->priceWithPDV())) && is_numeric($this->quantity)) {
 
-            $sum = $this->priceWithPDV() * $this->quantity;
-            return number_format($sum, 2);
-        } else {
-
-            return 0;
-        }
+        $sum = $price * $quantity;
+        return number_format($sum, 2, '.', '');
     }
+    // public function sumPrice()
+    // {
+    //     if (is_numeric(floatval($this->priceWithPDV())) && is_numeric($this->quantity)) {
+
+    //         $sum = $this->priceWithPDV() * $this->quantity;
+    //         return number_format($sum, 2);
+    //     } else {
+
+    //         return 0;
+    //     }
+    // }
     public  function __toString()
     {
         return " Uspesno ste kupili  proizvode havala Vam na poseti.  ";
