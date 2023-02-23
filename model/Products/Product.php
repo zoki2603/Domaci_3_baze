@@ -176,6 +176,29 @@ class Product implements PDV
             echo $e->getMessage();
         }
     }
+    public static function searchByName($name, $conn)
+    {
+        try {
+            $q = "SELECT * FROM products WHERE name LIKE '%$name%'";
+            $result = mysqli_query($conn->getConnection(), $q);
+            $product = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $product = array(
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'price' => $row['price'],
+                    'image' => $row['image'],
+                    'quantity' => $row['quantity'],
+                    'description' => $row["description"]
+                );
+                $products[] = $product;
+            }
+            return $products;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getId()
     {
         return $this->id;

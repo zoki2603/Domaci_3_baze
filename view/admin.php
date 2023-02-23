@@ -17,6 +17,11 @@ if ($_SESSION['user']->getTip() !== '1') {
     echo "Nemate dozvolu za pristup ovoj stranici.";
     exit();
 }
+if (isset($_GET['search'])) {
+    $searchName = $_GET['search'];
+
+    $products = Product::searchByName($searchName, $conn);
+}
 
 
 ?>
@@ -53,12 +58,16 @@ if ($_SESSION['user']->getTip() !== '1') {
         <tr>
             <a href="addProduct.php" style="margin-left: 15px;"> <input type="submit" name="" value="Add Product" class="btn btn-success btn-lg mb-1"></a>
             <a href="addCategory.php"> <input type="submit" name="" value="Add Category" class="btn btn-primary btn-lg"></a>
-
         </tr>
     </table>
 
 
-
+    <div class="col-3" style="margin-left:75%;">
+        <form method="GET" action="admin.php" class="d-flex">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
 
     <sectoin class="sec">
 

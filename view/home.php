@@ -17,6 +17,11 @@ if (isset($_GET['sort-option'])) {
 } else {
     $products = Product::getAllProducts($conn);
 }
+if (isset($_GET['search'])) {
+    $searchName = $_GET['search'];
+
+    $products = Product::searchByName($searchName, $conn);
+}
 
 ?>
 <!DOCTYPE html>
@@ -72,24 +77,27 @@ if (isset($_GET['sort-option'])) {
     </section>
 
     <h1 class="pheading">All Products</h1>
-    <div class="col-3">
-        <div class="container text-center ">
+    <div class="container  ">
+        <div class="col-3">
             <form method="GET" action="home.php">
-                <label for="sort-option">Sortiraj po cijeni:</label>
-                <select id="sort-option" class="form-select" name="sort-option">
-                    <option value="defoalt">Izaberi</option>
+                <select class="form-select form-select-sm" name="sort-option" aria-label=".form-select-sm example">
+                    <option selected>Izaberi</option>
                     <option value="ASC">Uzlazno</option>
                     <option value="DESC">Silazno</option>
                 </select>
                 <div>
-                    <input type="submit" name="sort" class="btn btn-primary" style="margin-left: 350px;;" value="Sortiraj">
-
-
+                    <input type="submit" name="sort" class="btn btn-outline-primary" value="Sortiraj">
                 </div>
             </form>
         </div>
-    </div>
 
+        <div class="col-3" style="margin-left: 65%;">
+            <form method="GET" action="home.php" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     <sectoin class="sec">
         <div class="products">
             <!-- Start Card -->
