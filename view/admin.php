@@ -1,9 +1,23 @@
 <?php
-session_start();
+
 include_once "../DB/dbconnect.php";
 include_once "../model/Products/Product.php";
 $conn = DB::getInstance();
 $products = Product::getAllProducts($conn);
+session_start();
+if (!isset($_SESSION['user'])) {
+    // Ako korisnik nije prijavljen, preusmjeri ga na stranicu za prijavu
+    header("Location: login.php");
+    exit();
+}
+
+// Provjeri razinu pristupa korisnika
+if ($_SESSION['user']->getTip() !== '1') {
+    // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
+    echo "Nemate dozvolu za pristup ovoj stranici.";
+    exit();
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -29,15 +43,10 @@ $products = Product::getAllProducts($conn);
         <ul class="menu">
 
             <li><a href="purchase.php">Purchase</a></li>
-            <li><a href="">Registar</a></li>
+            <li><a href="adminRegister.php">Registar</a></li>
             <li><a href="admin.php">Admin</a></li>
             <li><a href="logout.php">Logout</a></li>
 
-            <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
-
-            <div class="menu-btn">
-                <i class="fa fa-bars"></i>
-            </div>
     </nav>
     <h1 class="pheading">ADMIN</h1>
     <table>
