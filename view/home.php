@@ -4,8 +4,20 @@ include_once "../DB/dbconnect.php";
 include_once "../model/Products/Product.php";
 include_once "../model/Cart/Cart.php";
 $conn = DB::getInstance();
-$products = Product::getAllProducts($conn);
+
 session_start();
+
+if (isset($_GET['sort-option'])) {
+    $sort_option = $_GET['sort-option'];
+    if ($sort_option == 'ASC') {
+        $products = Product::sortByPriceASC($conn);
+    } else if ($sort_option == 'DESC') {
+        $products = Product::sortByPriceDESC($conn);
+    }
+} else {
+    $products = Product::getAllProducts($conn);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,10 +72,28 @@ session_start();
     </section>
 
     <h1 class="pheading">All Products</h1>
+    <div class="col-3">
+        <div class="container text-center ">
+            <form method="GET" action="home.php">
+                <label for="sort-option">Sortiraj po cijeni:</label>
+                <select id="sort-option" class="form-select" name="sort-option">
+                    <option value="defoalt">Izaberi</option>
+                    <option value="ASC">Uzlazno</option>
+                    <option value="DESC">Silazno</option>
+                </select>
+                <div>
+                    <input type="submit" name="sort" class="btn btn-primary" style="margin-left: 350px;;" value="Sortiraj">
+
+
+                </div>
+            </form>
+        </div>
+    </div>
 
     <sectoin class="sec">
         <div class="products">
             <!-- Start Card -->
+
             <?php
             foreach ($products as $product) { ?>
                 <div class="card">

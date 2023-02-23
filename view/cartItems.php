@@ -81,8 +81,7 @@ include_once "../model/Cart/Cart.php";
                                 <td><?php echo $product->quantity; ?></td>
                                 <td><?php echo $product->sumPrice() ?></td>
                                 <input type="hidden" name="userID" value="<?php echo $_SESSION["user"]->getId(); ?>">
-                                <!-- <input type="hidden" name="id" value="<?php echo $product->id ?>">
-                                <input type="hidden" name="qunatity" value="<?php echo $product->quantity; ?>"> -->
+
                                 <input type="hidden" name="allPrce" value="<?php echo $cart->sumAll() ?>">
                                 <td><input type="submit" name="removeProduct" value="Delete" class="btn btn-danger"></td>
 

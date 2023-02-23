@@ -8,7 +8,6 @@ $conn = DB::getInstance();
 if (isset($_POST["submit"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
-
     $q = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn->getConnection(), $q);
 

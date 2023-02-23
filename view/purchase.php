@@ -7,9 +7,20 @@ include_once "../model/User/Customer.php";
 
 $conn = DB::getInstance();
 $allUsers =  Customer::getAllUsers($conn);
-// var_dump($id);
-// die;
 $allPurchase = Product::getAllPurchase($conn);
+if (!isset($_SESSION['user'])) {
+    // Ako korisnik nije prijavljen, preusmjeri ga na stranicu za prijavu
+    header("Location: login.php");
+    exit();
+}
+// var_dump($_SESSION['user']->getTip());
+// die;
+// Provjeri razinu pristupa korisnika
+if ($_SESSION['user']->getTip() !== '1') {
+    // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
+    echo "Nemate dozvolu za pristup ovoj stranici.";
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
@@ -39,11 +50,11 @@ $allPurchase = Product::getAllPurchase($conn);
             <li><a href="admin.php">Admin</a></li>
             <li><a href="logout.php">Logout</a></li>
 
-            <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
+            <!-- <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
 
             <div class="menu-btn">
                 <i class="fa fa-bars"></i>
-            </div>
+            </div> -->
     </nav>
     <h1 class="pheading">ORDERS</h1>
 

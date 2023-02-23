@@ -19,8 +19,8 @@ if (isset($_POST["submit"])) {
         $result = mysqli_query($conn->getConnection(), $q);
 
         if (mysqli_num_rows($result) > 0) {
-            // Korisnik sa unetom email adresom već postoji u bazi podataka
-            echo "Korisnik sa unetom email adresom već postoji u bazi podataka";
+            // Korisnik sa unetom email adresom vec postoji u bazi podataka
+            echo "Korisnik sa unetom email adresom vec postoji u bazi podataka";
         } else {
             if (Customer::register($name, $lastname, $email, $password, $city,  $address, $conn, $money = 1000, $tip = 0)) {
                 header("Location:../view/login.php");
@@ -32,28 +32,3 @@ if (isset($_POST["submit"])) {
         }
     }
 }
-// class RegisterController
-// {
-
-//     public function register(Customer $user)
-//     {
-//         $name = $user->getName();
-//         $lastname = $user->getLastname();
-//         $money = $user->getMoney();
-//         $email = $user->getEmail();
-//         $password = $user->getPassword();
-//         $city = $user->getCity();
-//         $address = $user->getAddress();
-//         $tip = $user->getTip();
-//         $password = password_hash($password, PASSWORD_DEFAULT);
-//         $conn = DB::getInstance();
-//         try {
-//             $query  = "INSERT INTO users (name,lastname,email,password,money,city,address,tip) 
-//         VALUE ('$name','$lastname','$email','$password',$money,'$city','$address','$tip')";
-//             $result = mysqli_query($conn->getConnection(), $query);
-//             return $result;
-//         } catch (Exception $e) {
-//             echo "Message:" . $e->getMessage();
-//         }
-//     }
-// }

@@ -10,6 +10,19 @@ $purchase = Product::getAllPurchaseProducts($conn);;
 $id_user = $_GET["id"];
 $purchase_date = $_GET["date"];
 
+if (!isset($_SESSION['user'])) {
+    // Ako korisnik nije prijavljen, preusmjeri ga na stranicu za prijavu
+    header("Location: login.php");
+    exit();
+}
+
+// Provjeri razinu pristupa korisnika
+if ($_SESSION['user']->getTip() !== '1') {
+    // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
+    echo "Nemate dozvolu za pristup ovoj stranici.";
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,11 +51,6 @@ $purchase_date = $_GET["date"];
             <li><a href="admin.php">Admin</a></li>
             <li><a href="logout.php">Logout</a></li>
 
-            <li><a href="cartItems.php"><span></span><i class="fas fa-shopping-cart"></i></a></li>
-
-            <div class="menu-btn">
-                <i class="fa fa-bars"></i>
-            </div>
     </nav>
     <h1 class="pheading">Purchase Product</h1>
 
@@ -59,8 +67,9 @@ $purchase_date = $_GET["date"];
                         <th scope="col">Kolicina </th>
                         <th scope="col">Cena Proizvoda</th>
                         <th scope="col">Cena Proizvoda sa PDV</th>
+                        <th scope="col">Ukupna Cena Proizvoda </th>
                         <th scope="col">Datum Porudzbine</th>
-                        <th scope="col">Poruci</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -80,26 +89,29 @@ $purchase_date = $_GET["date"];
                                     <td><?php echo $row["quantity"] ?></td>
                                     <td><?php echo $row["price"] ?>$</td>
                                     <td><?php echo $row["priceWithPDV"] ?>$</td>
+                                    <td>
+                                        <?php $sum =  Product::sumPricePurchase($row["priceWithPDV"], $row["quantity"]);
+                                        echo $sum;
+
+                                        ?>$</td>
                                     <td><?php echo $row["date"] ?></td>
-                                    <td><input type="submit" name="order" value="Oreder" class="btn btn-success"></td>
+
                                 </tr>
-                                <tr>
-                                    <td colspan="3">Ukupna Cena: <?php echo Product::sumAllProducts($row["priceWithPDV"], $row["quantity"]) ?>$ </td>
-                                </tr>
+
+
                             <?php } ?>
                         <?php } ?>
-
-
                         <tr>
-                            <td colspan="8" style="color: red;font-size: large;text-align: center;"> </td>
-
+                            <td colspan="3">Ukupna Cena:<?php echo $cart->sumAll() ?> </td>
+                            <td><input type="submit" style="margin-left: 650%;" name="order" value="Oreder" class="btn btn-success"></td>
                         </tr>
+
+
                             </form>
                             <tr>
-                                <td>
-                                <td colspan="8" style="color: red;font-size: large;text-align: center;"> </td>
-                                </td>
+
                             </tr>
+
                             </tr>
                 </tbody>
             </table>

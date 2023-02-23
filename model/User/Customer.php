@@ -23,7 +23,7 @@ class Customer extends Person
     {
         try {
             $query  = "INSERT INTO users (name,lastname,city,address,email,password,money,tip) 
-            VALUE ('$name','$lastname','$email','$password','$city','$address','$money','$tip')";
+            VALUE ('$name','$lastname','$email','$password','$city','$address',$money,'$tip')";
             $result = mysqli_query($conn->getConnection(), $query);
             return $result;
         } catch (Exception $e) {

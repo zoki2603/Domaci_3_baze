@@ -1,4 +1,18 @@
-<?php session_start(); ?>
+<?php session_start();
+if (!isset($_SESSION['user'])) {
+    // Ako korisnik nije prijavljen, preusmjeri ga na stranicu za prijavu
+    header("Location: login.php");
+    exit();
+}
+
+// Provjeri razinu pristupa korisnika
+if ($_SESSION['user']->getTip() !== '1') {
+    // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
+    echo "Nemate dozvolu za pristup ovoj stranici.";
+    exit();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

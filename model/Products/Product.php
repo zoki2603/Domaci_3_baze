@@ -133,6 +133,49 @@ class Product implements PDV
         }
     }
 
+    public static function sortByPriceDESC($conn)
+    {
+        try {
+            $q = "SELECT * FROM products ORDER BY price DESC";
+            $result = mysqli_query($conn->getConnection(), $q);
+
+            $products = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $product = array(
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'price' => $row['price'],
+                    'image' => $row['image'],
+                    'quantity' => $row['quantity']
+                );
+                $products[] = $product;
+            }
+            return $products;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public static function sortByPriceASC($conn)
+    {
+        try {
+            $q = "SELECT * FROM products ORDER BY price ASC";
+            $result = mysqli_query($conn->getConnection(), $q);
+            $product = array();
+            while ($row = mysqli_fetch_assoc($result)) {
+                $product = array(
+                    'id' => $row['id'],
+                    'name' => $row['name'],
+                    'price' => $row['price'],
+                    'image' => $row['image'],
+                    'quantity' => $row['quantity']
+                );
+                $products[] = $product;
+            }
+            return $products;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
     public function getId()
     {
         return $this->id;
@@ -188,11 +231,12 @@ class Product implements PDV
         return floatval($sum);
     }
 
-    public static function sumAllProducts($quantity, $price)
+    public static function sumPricePurchase($priceWithPDV, $quantity)
     {
 
-        $sum = floatval($price * $quantity);
-        return number_format($sum, 2, '.', '');
+        $sum = $priceWithPDV * $quantity;
+
+        return $sum;
     }
     public function sumPrice()
     {
