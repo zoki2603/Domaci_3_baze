@@ -123,9 +123,9 @@ class Product implements PDV
     public static function getAllPurchase($conn)
     {
         try {
-            $query = "SELECT DISTINCT users.name,users.lastname,purchase.date,purchase.id_user
+            $query = "SELECT DISTINCT users.name,users.lastname,purchase.date,purchase.id_user 
             FROM purchase
-            INNER JOIN users ON purchase.id_user = users.id ";
+            INNER JOIN users ON purchase.id_user = users.id  ORDER BY date DESC";
             $result = mysqli_query($conn->getConnection(), $query);
             return $result;
         } catch (Exception $e) {
