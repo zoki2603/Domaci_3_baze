@@ -16,7 +16,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Provjeri razinu pristupa korisnika
+//Provera da li je admin
 if ($_SESSION['user']->getTip() !== '1') {
     // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
     echo "Nemate dozvolu za pristup ovoj stranici.";
@@ -47,7 +47,7 @@ if ($_SESSION['user']->getTip() !== '1') {
         <ul class="menu">
 
             <li><a href="purchase.php">Purchase</a></li>
-            <li><a href="">Registar</a></li>
+            <li><a href="adminRegister.php">Registar</a></li>
             <li><a href="admin.php">Admin</a></li>
             <li><a href="logout.php">Logout</a></li>
 
@@ -103,7 +103,7 @@ if ($_SESSION['user']->getTip() !== '1') {
                         <?php } ?>
                         <tr>
                             <td colspan="3">Ukupna Cena:<?php echo $cart->sumAll() ?> </td>
-                            <td><input type="submit" style="margin-left: 650%;" name="order" value="Oreder" class="btn btn-success"></td>
+                            <td><input type="submit" style="margin-left: 650%;" name="order" value="Order" class="btn btn-success"></td>
                         </tr>
 
 

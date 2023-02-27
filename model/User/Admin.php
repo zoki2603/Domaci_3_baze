@@ -1,15 +1,27 @@
 <?php
-
+include_once "Person.php";
 class Admin extends Person
 {
 
     protected $tip;
 
-    public function __construct($id, $name, $lastname, $email, $password, $city, $address, $tip = 1)
+    public function __construct($id, $name, $lastname, $email, $password, $city, $address, $tip)
     {
 
         parent::__construct($id, $name, $lastname, $email, $password, $city, $address);
         $this->tip = $tip;
+    }
+
+    public static function adminRegister($name, $lastname,  $city, $address, $email,  $password, $tip, $conn)
+    {
+        try {
+            $query  = "INSERT INTO users (name,lastname,city,address,email,password,tip) 
+            VALUE ('$name','$lastname','$email','$password','$city','$address','$tip')";
+            $result = mysqli_query($conn->getConnection(), $query);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
 

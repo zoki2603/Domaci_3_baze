@@ -58,9 +58,9 @@ if (isset($_POST["buyAll"])) {
         $date = date("d.m.Y  H:i:s");
         foreach ($cart->products as $product) {
             $id_product = $product->id;
-            $qunatity = intval($product->quantity);
+            $quantity = intval($product->quantity);
         }
-        Product::buyProducts($id_product, $id_user, $price, $qunatity, $date, $conn);
+        Product::buyProducts($id_product, $id_user, $price, $quantity, $date, $conn);
         Cart::emptyCart();
         header("Location:../view/home.php");
         exit();

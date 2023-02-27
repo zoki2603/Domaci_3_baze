@@ -1,6 +1,7 @@
 <?php
 
 include_once "PDV.php";
+
 include_once "../model/User/Customer.php";
 
 class Product implements PDV
@@ -86,27 +87,92 @@ class Product implements PDV
             $quantity = $product->getQuantity();
             $date = date("Y-m-d H:i:s");
 
-            // Dodavanje vrednosti za upit
-            $values[] = "($id_product, $id_user, $price,$priceWithPDV, $quantity, '$date')";
 
-            // Azuriranje kolicine proizvoda
-            $query = "UPDATE products SET quantity = quantity - $quantity WHERE id = $id_product";
+            $query = "SELECT quantity FROM products WHERE id = $id_product";
             $result = mysqli_query($conn->getConnection(), $query);
-        }
+            $row = $result->fetch_assoc();
+            $current_quantity = intval($row['quantity']);
 
-        // Spajanje svih vrednosti u jedan string
-        $values = implode(",", $values);
+            if ($quantity <= $current_quantity) {
 
-        //  kupovinu proizvoda
-        $query = "INSERT INTO purchase (id_product, id_user, price,priceWithPDV, quantity, date) VALUES $values";
 
-        // Izvrsi  upit
-        if (mysqli_query($conn->getConnection(), $query)) {
-            echo "Uspesno ste kupili proizvode!";
-        } else {
-            echo "Error: " . $query . "<br>" . mysqli_error($conn->getConnection());
+                // Dodavanje vrednosti za upit
+                $values[] = "($id_product, $id_user, $price,$priceWithPDV, $quantity, '$date')";
+
+                // Azuriranje kolicine proizvoda
+                $query = "UPDATE products SET quantity = quantity - $quantity WHERE id = $id_product";
+                $result = mysqli_query($conn->getConnection(), $query);
+
+
+                // Spajanje svih vrednosti u jedan string
+                $values = implode(",", $values);
+
+                //  kupovinu proizvoda
+                $query = "INSERT INTO purchase (id_product, id_user, price,priceWithPDV, quantity, date) VALUES $values";
+
+                //Izvrsi  upit
+                if (mysqli_query($conn->getConnection(), $query)) {
+                    echo "Uspesno ste kupili proizvode!";
+                } else {
+                    echo "Error: " . $query . "<br>" . mysqli_error($conn->getConnection());
+                }
+            } else {
+                echo "Nije moguće kupiti $quantity komada proizvoda  nema toliko {$product->getName()} na stanju <br>";
+            }
         }
     }
+    // public static function buyProducts($id_product, $id_user, $price, $quantity, $date, $conn)
+
+    // {
+    //     // Dohvati sve proizvode iz korpe
+    //     $products = $_SESSION['cart']->getProducts();
+
+
+    //     $values = array();
+
+    //     // svi proizvodi u korpi
+    //     foreach ($products as $product) {
+    //         $id_product = $product->getId();
+    //         $price = $product->getPrice();
+    //         $priceWithPDV = $product->priceWithPDV();
+    //         $quantity = $product->getQuantity();
+    //         $date = date("Y-m-d H:i:s");
+
+    //         $query = "SELECT quantity FROM products WHERE id = $id_product";
+    //         $result = mysqli_query($conn->getConnection(), $query);
+    //         $row = $result->fetch_assoc();
+    //         $current_quantity = intval($row['quantity']);
+    //         // var_dump($current_quantity, $quantity);
+    //         // die;
+
+    //         if ($quantity <= $current_quantity) {
+
+    //             $values[] = "($id_product, $id_user, $price,$priceWithPDV, $quantity, '$date')";
+
+    //             // Azuriranje kolicine proizvoda
+    //             $query = "UPDATE products SET quantity = quantity - $quantity WHERE id = $id_product";
+    //             $result = mysqli_query($conn->getConnection(), $query);
+    //             // Spajanje svih vrednosti u jedan string
+    //             $values = implode(",", $values);
+
+    //             //  kupovinu proizvoda
+    //             $query = "INSERT INTO purchase (id_product, id_user, price,priceWithPDV, quantity, date) VALUES $values";
+
+    //             // Izvrsi  upit
+    //             if ($result && mysqli_affected_rows($conn->getConnection()) > 0) {
+    //                 // Uspesno izvrsena kupovina, isprazni korpu
+    //                 unset($_SESSION['cart']);
+    //                 return "Uspešno ste izvršili kupovinu.";
+    //             } else {
+    //                 // Neuspesno izvrsena kupovina
+    //                 return "Došlo je do greške prilikom izvršavanja kupovine.";
+    //             }
+    //         } else {
+    //             echo "Nije moguće kupiti $quantity komada proizvoda  nema toliko {$product->getName()} na stanju";
+    //         }
+    //     }
+    // }
+
     public static function getAllPurchaseProducts($conn)
     {
         try {

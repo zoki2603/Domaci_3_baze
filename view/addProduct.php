@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Provjeri razinu pristupa korisnika
+//Provera da li je admin
 if ($_SESSION['user']->getTip() !== '1') {
     // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
     echo "Nemate dozvolu za pristup ovoj stranici.";
@@ -46,7 +46,7 @@ if ($_SESSION['user']->getTip() !== '1') {
         <ul class="menu">
 
 
-            <li><a href="">Registar</a></li>
+            <li><a href="adminRegister.php">Registar</a></li>
             <li><a href="admin.php">Home</a></li>
             <li><a href="logout.php">Logout</a></li>
             <div class="menu-btn">

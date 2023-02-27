@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Provjeri razinu pristupa korisnika
+//Provera da li je admin
 if ($_SESSION['user']->getTip() !== '1') {
     // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
     echo "Nemate dozvolu za pristup ovoj stranici.";
@@ -56,7 +56,7 @@ if ($_SESSION['user']->getTip() !== '1') {
             <hr class="hr">
         </div>
         <div class="mx-auto container ">
-            <form action="" id="login-form" method="post">
+            <form action="../controler/AdminRegisterController.php" id="login-form" method="post">
                 <div class="form-group">
                     <label for="">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Name">
@@ -92,7 +92,7 @@ if ($_SESSION['user']->getTip() !== '1') {
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn" name="submit" id="login-btn" value="Register">
+                    <input type="submit" class="btn" name="admin_reg" id="login-btn" value="Register">
                 </div>
 
             </form>

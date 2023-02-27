@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// Provjeri razinu pristupa korisnika
+//Provera da li je admin
 if ($_SESSION['user']->getTip() !== '1') {
     // Ako korisnik nije admin, prikaži poruku o zabrani pristupa
     echo "Nemate dozvolu za pristup ovoj stranici.";
